@@ -1675,187 +1675,45 @@ INSERT INTO `towns` (`town_id`, `name`) VALUES
 
 use softuni;
 
-/*Задача 1. Намерете цялата информация за отделите
-Напишете SQL заявка, за да намерите цялата налична информация за отделите.*/
-SELECT department_id, name,manager_id 
-FROM departments; 
+SELECT *FROM employees;
 
-/*Задача 2. Намерете всички имена на отдели
-Напишете SQL заявка, за да намерите всички имена на отдел.*/
-SELECT DISTINCT name AS IME FROM departments;
+UPDATE employees
+SET last_name='Dospatliyski'
+WHERE employee_id=1;
 
-/* Задача 3. Намерете заплатата на всеки служител
-Напишете SQL заявка, която намера собственото име,
- фамилното име и заплата на всеки служител.*/
+UPDATE employees
+SET job_title='Teacher'
+WHERE employee_id=1;
  
- SELECT first_name,last_name,salary 
- FROM employees;
- 
-/* Задача 4. Намерете пълното име на всеки служител
-Напишете SQL заявка, която намира личното, 
-бащиното и фамилното име на всеки служител. */
-SELECT first_name,middle_name,last_name 
- FROM employees;
- 
- /* Задача 5. Намерете имейл адреса на всеки служител
-Напишете SQL заявка, която намира имейл адреса на всеки служител.
- (от неговото собствено и фамилно име).  */
- SELECT concat(first_name,".",last_name,"@softuni.bg") AS full_email_address
- FROM employees;
- 
- SELECT concat(first_name," ",middle_name," ",last_name) AS full_name
- FROM employees;
- 
- /* Задача 6. Намерете всички различни работни заплати
-Напишете SQL заявка, за да намерите всичките различни работни заплати.
- Покажи само заплатите. */
- 
- SELECT DISTINCT salary
- FROM employees;
- 
- /*  Задача 7. Намерете цялата информация за служители
-Напишете SQL заявка, за да намерите цялата информация за служителите,
- чиято длъжност е "Търговски представител" ( Sales Representative ). */
- 
- SELECT *
- FROM employees
- WHERE job_title="Sales Representative";
- 
- SELECT employee_id, first_name,last_name 
- FROM employees
- WHERE employee_id=1;
+SELECT *FROM projects;
 
- SELECT employee_id, first_name,last_name 
- FROM employees
- WHERE department_id=1;
- 
- SELECT employee_id, first_name,last_name, salary
- FROM employees
- WHERE salary<20000;
- 
- SELECT employee_id, manager_id, last_name 
- FROM employees
- WHERE NOT(manager_id=3 OR manager_id=4);
- 
- SELECT last_name, salary
- FROM employees
- WHERE salary BETWEEN 20000 AND 22000;
- 
- SELECT first_name,last_name, manager_id
- FROM employees
- WHERE manager_id IN (109,3,16);
- 
- SELECT last_name, manager_id
- FROM employees
- WHERE manager_id = NULL;
- 
-  SELECT last_name, manager_id
-  FROM employees
-  WHERE manager_id IS NULL;
- 
-  SELECT last_name, manager_id
-  FROM employees
-  WHERE manager_id IS NOT NULL;
- 
- 
- /* Задача 8. Намерете имената на всички служители със заплата в диапазон
-Напишете SQL заявка, която намира личното име, фамилно име и длъжност
- на всички служители, чиято заплата е в диапазона [20000, 30000]. */
- 
- SELECT concat(first_name, " ", last_name) AS FULL_NAME, job_title,salary 
- FROM employees
- WHERE salary BETWEEN 20000 AND 30000;
- 
- SELECT concat(first_name, " ", last_name) AS FULL_NAME, job_title,salary 
- FROM employees
- WHERE salary>=20000 AND salary<=30000;
- 
- /* Задача 9. Намерете имената на всички служители
-Напишете SQL заявка, която намира пълното име на всички служители, 
-чиято заплата е 25000, 14000, 12500 или 23600. 
-Пълното име е комбинация от личното, бащиното и фамилното име 
-(разделени с единичен интервал) и те трябва да бъдат в една колона, 
-наречена "Пълно име" “Full Name”.  */
- 
- SELECT concat(first_name, " ",middle_name," ",last_name) AS FULL_NAME,salary 
- FROM employees
- WHERE salary in (25000,14000,12500,23600);
+UPDATE projects
+SET end_date = '2017-05-29'
+WHERE end_date IS NULL;
 
-/* Задача 10. Намерете всички служители без мениджър
-Напишете SQL заявка да намери собствено и фамилно име
- за тези служители, които не са мениджъри.*/
- SELECT concat(first_name, " ",middle_name," ",last_name) AS FULL_NAME,salary 
- FROM employees
- WHERE manager_id IS NULL;
- 
- /* Задача 11. Намерете всички служители със заплата повече от 50000
-Напишете SQL заявка, която намира собственото име, фамилното име и 
-заплатата на тези служители, които имат заплата повече от 50000. 
-Подредете ги в намаляващ ред от заплата. */
+DELETE FROM employees
+WHERE employee_id=1;
 
-SELECT first_name,last_name,salary
-FROM employees
-WHERE salary>50000
-ORDER BY salary DESC;
+SELECT *FROM departments;
 
-SELECT first_name,last_name,salary
-FROM employees
-WHERE salary>50000
-ORDER BY first_name ASC;
+SELECT department_id AS NOMER
+FROM departments
+WHERE name IN ("Engineering","Tool Design","Marketing","Information Services");
 
-/*Задача 12. Намете 5 най-добре платени служителя
-Напишете SQL заявка, която намира собственото 
-и фамилното име на 5 най-добре платени служители,
- подредени в низходящ ред по заплата */
+UPDATE employees
+SET salary = salary*1.12
+WHERE department_id IN (1,2,4,11);
 
-SELECT first_name,last_name,salary
-FROM employees
-ORDER BY salary DESC
-LIMIT 5;
+UPDATE employees
+SET salary = salary*1.12
+WHERE job_title='Marketing Assistant';
 
-/*Задача 13. Намерете всички служители, които не са от отдел Marketing 
-Напишете SQL заявка, която намира собственото и фамилното име
- на всички служители чиито номер на отдел е различен от 4. */
-SELECT first_name, last_name, department_id
-FROM employees
-WHERE department_id != (4)
-ORDER BY department_id DESC;
-
-SELECT first_name, last_name, department_id
-FROM employees
-WHERE department_id NOT IN (4)
-ORDER BY department_id DESC;
-
-/* Задача 14. Различни длъжности
-Напишете SQL заявка,която  намира всички различни длъжности.*/
-SELECT DISTINCT job_title
-FROM employees;
-
-/*Задача 15. Намерете първите 10 започнати проекти
-Напишете SQL заявка, която намира първите 10 започнати проекти. 
-Изберете цялата информация за тях и ги подредете по начална 
-дата, след това по име. */
-SELECT * FROM projects 
-ORDER BY start_date,name ASC
-LIMIT 10;
-
-/*Задача 16. Последните 7 наети служители
-Напишете SQL заявка, която намира последните 7 наети служители.
- Изберете техните собствени имена, фамилни имена и датата им на наемане.*/
- SELECT * FROM employees
- ORDER BY hire_date DESC
- LIMIT 7;
- 
- /*Задача 17. Увеличаване на заплати
-Напишете SQL заявка за увеличаване на заплатите на 
-всички служители, които са  в отделите Engineering,
- Tool Design, Marketing или Information Services с 12 %.
- След това изберете колоната със заплатите  от таблицата Emmployees. */
- 
+UPDATE employees
+SET salary = salary*1.12
+WHERE employee_id IN (2,4,6);
 
 
-
-
+SELECT *FROM employees;
  
  
  
